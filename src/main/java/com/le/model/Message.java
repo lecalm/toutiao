@@ -47,8 +47,8 @@ public class Message {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createDate) {
-        this.createdDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public int getHasRead() {

@@ -1,10 +1,7 @@
 package com.le.dao;
 
 import com.le.model.Comment;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -13,6 +10,11 @@ public interface CommentDAO {
     String TABLE_NAME = " comment ";
     String INSERT_FIELDS = " user_id, content, created_date, entity_id, entity_type, status ";
     String SELECT_FIELDS = " id, " + INSERT_FIELDS;
+
+    //在DAO层一般将delete操作设计成更新操作。delete操作后不会删除数据，仅仅设置状态表示该状态不可见
+    @Update({"update ", TABLE_NAME," set status=#{status} where entity_id=#{entityId} and entity_type=#{entityType}"})
+    void updateStatus(@Param("entityId") int entityId, @Param("entityType") int entityType,@Param("status") int status);
+
 
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
             ") values (#{userId},#{content},#{createdDate},#{entityId},#{entityType},#{status})"})

@@ -29,7 +29,7 @@ public class QiniuService {
     //创建上传对象
     UploadManager uploadManager = new UploadManager();
 
-    private static String QINIU_IMAGE_DOMAIN = "http://qc9rnm2wv.bkt.clouddn.com";
+    private static String QINIU_IMAGE_DOMAIN = "https://qc9rnm2wv.bkt.clouddn.com";
 
     //简单上传，使用默认策略，只需要设置上传的空间名就可以了
     public String getUpToken() {
@@ -39,17 +39,21 @@ public class QiniuService {
     public String saveImage(MultipartFile file) throws IOException {
         try {
             int dotPos = file.getOriginalFilename().lastIndexOf(".");
+//            System.out.println(dotPos);
             if (dotPos < 0) {
                 return null;
             }
             String fileExt = file.getOriginalFilename().substring(dotPos + 1).toLowerCase();
+//            System.out.println(fileExt);
             if (!ToutiaoUtil.isFileAllowed(fileExt)) {
                 return null;
             }
 
             String fileName = UUID.randomUUID().toString().replaceAll("-", "") + "." + fileExt;
             //调用put方法上传
+//            System.out.println(fileName);
             Response res = uploadManager.put(file.getBytes(), fileName, getUpToken());
+//            System.out.println("le"+res.bodyString());
             //打印返回的信息
             if (res.isOK() && res.isJson()) {
                 return QINIU_IMAGE_DOMAIN + JSONObject.parseObject(res.bodyString()).get("key");
