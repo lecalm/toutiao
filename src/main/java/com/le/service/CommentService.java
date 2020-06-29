@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by nowcoder on 2016/7/7.
- */
+
 @Service
 public class CommentService {
     private static final Logger logger = LoggerFactory.getLogger(QiniuService.class);
@@ -29,5 +27,10 @@ public class CommentService {
 
     public int getCommentCount(int entityId, int entityType) {
         return commentDAO.getCommentCount(entityId, entityType);
+    }
+
+    //注意与DAO层删除操作得区别
+    public void deleteComment(int entityId, int entityType){
+        commentDAO.updateStatus(entityId,entityType,1);
     }
 }

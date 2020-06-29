@@ -82,7 +82,7 @@ public class NewsController {
     public String uploadImage(@RequestParam("file") MultipartFile file) {
         try {
             String fileUrl = newsService.saveImage(file);
-            //String fileUrl = qiniuService.saveImage(file);
+//            String fileUrl = qiniuService.saveImage(file);
             if (fileUrl == null) {
                 return ToutiaoUtil.getJSONString(1, "上传图片失败");
             }
@@ -122,6 +122,7 @@ public class NewsController {
     public String addComment(@RequestParam("newsId") int newsId,
                              @RequestParam("content") String content) {
         try {
+            //可以添加功能：comment入库前过滤敏感词
             Comment comment = new Comment();
             comment.setUserId(hostHolder.getUser().getId());
             comment.setContent(content);

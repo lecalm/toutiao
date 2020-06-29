@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
-//@Controller
+
 public class IndexController {
     private static final Logger logger = LoggerFactory.getLogger(com.le.controller.IndexController.class);
 

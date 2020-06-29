@@ -1,8 +1,10 @@
 package com.le.controller;
 
+import com.le.model.EntityType;
 import com.le.model.HostHolder;
 import com.le.model.News;
 import com.le.model.ViewObject;
+import com.le.service.LikeService;
 import com.le.service.NewsService;
 import com.le.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +29,22 @@ public class HomeController {
     @Autowired
     HostHolder hostHolder;
 
+    @Autowired
+    LikeService likeService;
+
     private List<ViewObject> getNews(int userId, int offset, int limit) {
         List<News> newsList = newsService.getLatestNews(userId, offset, limit);
-
+        int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId():0;
         List<ViewObject> vos = new ArrayList<>();
         for (News news : newsList) {
             ViewObject vo = new ViewObject();
             vo.set("news", news);
             vo.set("user", userService.getUser(news.getUserId()));
+            if(localUserId != 0){
+                vo.set("like",likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS,news.getId()));
+            }else{
+                vo.set("like",0);
+            }
             vos.add(vo);
         }
         return vos;
