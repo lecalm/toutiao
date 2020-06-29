@@ -31,10 +31,10 @@ public class LikeService {
 
     public long disLike(int userId, int entityType, int entityId){
         // 在反对集合里增加
-        String disLikeKey = RedisKeyUtil.getDisLikeKey(entityId, entityType);
+        String disLikeKey = RedisKeyUtil.getDisLikeKey(entityType, entityId);
         jedisAdapter.sadd(disLikeKey, String.valueOf(userId));
         // 从喜欢里删除
-        String likeKey = RedisKeyUtil.getLikeKey(entityId, entityType);
+        String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         jedisAdapter.srem(likeKey, String.valueOf(userId));
         return jedisAdapter.scard(likeKey);
 

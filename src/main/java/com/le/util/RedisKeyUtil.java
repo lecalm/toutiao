@@ -19,7 +19,7 @@ public class RedisKeyUtil {
         return BIZ_LIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
     }
 
-    public static String getDisLikeKey(int entityId, int entityType) {
+    public static String getDisLikeKey(int entityType, int entityId) {
         return BIZ_DISLIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
     }
 }
